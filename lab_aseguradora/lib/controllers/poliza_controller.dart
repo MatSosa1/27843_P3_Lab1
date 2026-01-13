@@ -56,11 +56,6 @@ class PolizaController {
       }
     }
 
-    print(cargoValor);
-    print(cargoModelo);
-    print(cargoEdad);
-    print(cargoAccidentes);
-
     return cargoValor + cargoModelo + cargoEdad + cargoAccidentes;
   }
 }
