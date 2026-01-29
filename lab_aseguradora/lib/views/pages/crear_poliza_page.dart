@@ -162,6 +162,9 @@ class _CrearPolizaPageState extends ConsumerState<CrearPolizaPage> {
         ),
       );
 
+      // Invalidar el provider para que recargue la lista de pólizas
+      ref.invalidate(polizasProvider);
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Póliza creada con éxito')),

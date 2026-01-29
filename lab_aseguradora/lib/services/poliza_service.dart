@@ -6,19 +6,27 @@ import 'package:lab_aseguradora/models/propietario.dart';
 import 'package:lab_aseguradora/models/seguro.dart';
 
 class PolizaService {
-  static const String baseUrl = 'http://localhost:3000/api';
+  static const String baseUrl = 'http://192.168.1.3:3000/api';
+  
+  // 1. Añadimos la propiedad cliente
+  final http.Client client;
+
+  // 2. Constructor que permite inyectar un cliente mockeado o usar el real
+  PolizaService({http.Client? client}) : client = client ?? http.Client();
 
   Future<Propietario> crearPropietario(Propietario p) async {
-    final res = await http.post(
+    // 3. Usamos 'client.post' en lugar de 'http.post'
+    final res = await client.post(
       Uri.parse('$baseUrl/propietarios'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(p.toJson()),
     );
+    
     return Propietario.fromJson(jsonDecode(res.body));
   }
 
   Future<Automovil> crearAutomovil(Automovil a) async {
-    final res = await http.post(
+    final res = await client.post(
       Uri.parse('$baseUrl/automoviles'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(a.toJson()),
@@ -27,7 +35,7 @@ class PolizaService {
   }
 
   Future<Seguro> crearSeguro(Seguro s) async {
-    final res = await http.post(
+    final res = await client.post(
       Uri.parse('$baseUrl/seguros'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(s.toJson()),
@@ -36,7 +44,7 @@ class PolizaService {
   }
 
   Future<List<Poliza>> obtenerPolizas() async {
-    final res = await http.get(
+    final res = await client.get(
       Uri.parse('$baseUrl/seguros'),
     );
 
